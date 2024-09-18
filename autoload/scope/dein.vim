@@ -4,10 +4,8 @@ scriptencoding utf-8
 import autoload 'scope/popup.vim'
 export def DeinUpdate()
   var plugins = []
-  var nr = 1
-  for plugin in items(dein#get())
-    plugins->add({text: plugin[1].name, linenr: nr})
-    nr += 1
+  for plugin in values(dein#get())
+    plugins->add({text: plugin.name})
   endfor
   popup.NewFilterMenu("plugins", plugins,
     (res, key) => {
@@ -16,5 +14,5 @@ export def DeinUpdate()
     (winid, _) => {
       win_execute(winid, $"syn match FilterMenuLineNr '(\\d\\+)$'")
       hi def link FilterMenuLineNr Comment
-  })
+    })
 enddef
